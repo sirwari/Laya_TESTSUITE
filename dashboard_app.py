@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 """
-Laya Live Interactive Web Dashboard, Visual Question Builder & C-Suite Executive Studio
+Laya Live Interactive Web Dashboard, Visual Question Builder & Engineering Science Briefing Studio
 Powered by FastAPI, Uvicorn, PyTorch CUDA, and NVIDIA RTX 3090.
+
+Original Laya Architecture Created by NandhaKishorM / Convai Innovations
+Repository: https://github.com/NandhaKishorM/laya
+License: Apache-2.0
 """
 
 import time
@@ -24,7 +28,7 @@ t0 = time.time()
 router = Router(preload=True, device=DEVICE)
 print(f"[DASHBOARD] Checkpoints preloaded and resident in VRAM in {(time.time() - t0):.2f} seconds.")
 
-app = FastAPI(title="Laya Enterprise Studio & C-Suite Suite", version="2.0.0")
+app = FastAPI(title="Laya Engineering & Science Studio", version="2.5.0")
 
 app.add_middleware(
     CORSMiddleware,
@@ -248,22 +252,20 @@ def predict(req: PredictionRequest):
                 "confidence": round(q_val.get("confidence", 0.0), 4)
             }
 
-    # Calculate C-Suite ROI Metrics
-    # Assuming 1.8s LLM average vs Laya dur_ms
+    # Scientific Engineering Metrics
     llm_baseline_ms = 1800.0
     speedup_factor = round(llm_baseline_ms / max(dur_ms, 1.0), 1)
-    # 1 million calls per year: GPT-4 cost $0.03 per call = $30,000 / yr. Laya on-prem = $0
-    annual_llm_cost_savings = 30000.0
 
     return {
         "latency_ms": round(dur_ms, 2),
         "routing": routing_info,
         "answers": formatted_answers,
-        "executive_summary": {
-            "speedup_vs_llm": f"{speedup_factor}x Faster",
-            "annual_cost_savings": f"${annual_llm_cost_savings:,.0f} / year",
-            "hallucination_risk": "0.0% (Natively Typed Output)",
-            "compliance_status": "PASSED (Zero-Token Leakage)"
+        "engineering_summary": {
+            "inference_architecture": "Non-Autoregressive Single Neural Pass",
+            "latency_reduction": f"{speedup_factor}x Speedup (~{dur_ms:.1f}ms vs 1.8s LLMs)",
+            "probability_calibration": "RLCD Proper Scoring Rule (Brier Loss)",
+            "hallucination_guarantee": "0.0% Risk (Strictly Typed Projection)",
+            "vram_footprint": f"{get_telemetry()['gpu']['allocated_mb']} MB Resident"
         },
         "telemetry": get_telemetry()
     }
@@ -275,7 +277,7 @@ def index_html():
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Laya Enterprise Studio & C-Suite Suite</title>
+  <title>Laya Engineering & Science Studio</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -285,21 +287,24 @@ def index_html():
       --accent-blue: #3b82f6;
       --accent-purple: #8b5cf6;
       --accent-emerald: #10b981;
-      --accent-rose: #f43f5e;
+      --accent-cyan: #06b6d4;
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: var(--bg-dark); color: var(--text-main); font-family: 'Inter', sans-serif; padding: 24px; min-height: 100vh; }
+    body { background: var(--bg-dark); color: var(--text-main); font-family: 'Inter', sans-serif; padding: 24px; min-height: 100vh; line-height: 1.5; }
     .container { max-width: 1400px; margin: 0 auto; }
     
     header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--card-border); padding-bottom: 20px; margin-bottom: 24px; }
     .logo-group h1 { font-size: 1.8rem; font-weight: 800; background: linear-gradient(90deg, #60a5fa, #a78bfa, #34d399); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    
+    .attribution-tag { font-size: 0.8rem; color: #94a3b8; margin-top: 4px; display: flex; gap: 8px; align-items: center; }
+    .attribution-tag a { color: #60a5fa; text-decoration: none; }
+    .attribution-tag a:hover { text-decoration: underline; }
+
     /* Mode Toggle Switch */
     .mode-switch-container { display: flex; background: #1e293b; border-radius: 30px; padding: 4px; border: 1px solid #334155; }
     .mode-btn { border: none; background: transparent; color: var(--text-muted); padding: 8px 20px; border-radius: 24px; font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: all 0.25s ease; }
-    .mode-btn.active { background: linear-gradient(135deg, #2563eb, #7c3aed); color: white; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4); }
+    .mode-btn.active { background: linear-gradient(135deg, #2563eb, #0891b2); color: white; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4); }
 
     /* Telemetry Row */
     .telemetry-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
@@ -316,27 +321,26 @@ def index_html():
     select:focus, textarea:focus, input:focus { border-color: var(--accent-blue); box-shadow: 0 0 0 2px rgba(59,130,246,0.25); }
     textarea { font-family: 'JetBrains Mono', monospace; resize: vertical; }
 
-    .btn { background: linear-gradient(135deg, #2563eb, #6d28d9); color: white; border: none; padding: 14px 28px; border-radius: 10px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.15s, box-shadow 0.2s; width: 100%; margin-top: 16px; display: flex; justify-content: center; align-items: center; gap: 8px; }
+    .btn { background: linear-gradient(135deg, #2563eb, #0891b2); color: white; border: none; padding: 14px 28px; border-radius: 10px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.15s, box-shadow 0.2s; width: 100%; margin-top: 16px; display: flex; justify-content: center; align-items: center; gap: 8px; }
     .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37, 99, 235, 0.45); }
     .btn:active { transform: translateY(0); }
 
-    /* Form Visual Builder Styling */
+    /* Visual Builder */
     .builder-q-item { background: #070a12; border: 1px solid #1e293b; border-radius: 10px; padding: 16px; margin-bottom: 14px; position: relative; }
     .builder-row { display: flex; gap: 12px; margin-top: 8px; }
-    .btn-add-q { background: #1e293b; color: #60a5fa; border: 1px dashed #3b82f6; padding: 10px; border-radius: 8px; font-weight: 600; cursor: pointer; width: 100%; font-size: 0.88rem; transition: background 0.2s; }
-    .btn-add-q:hover { background: #1e293b; border-color: #60a5fa; }
+    .btn-add-q { background: #1e293b; color: #60a5fa; border: 1px dashed #3b82f6; padding: 10px; border-radius: 8px; font-weight: 600; cursor: pointer; width: 100%; font-size: 0.88rem; }
     .btn-remove { background: rgba(244, 63, 94, 0.15); color: #f43f5e; border: 1px solid #f43f5e; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; cursor: pointer; float: right; }
 
-    /* Executive Mode Styling */
-    .csuite-panel { display: none; }
-    .csuite-active .csuite-panel { display: block; }
-    .csuite-active .dev-panel { display: none; }
+    /* Executive Science Mode Panels */
+    .exec-panel { display: none; }
+    .exec-active .exec-panel { display: block; }
+    .exec-active .dev-panel { display: none; }
 
-    .exec-hero { background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.8)); border: 1px solid #334155; border-radius: 16px; padding: 28px; margin-bottom: 24px; text-align: center; }
-    .exec-hero h2 { font-size: 1.8rem; font-weight: 800; color: #f8fafc; margin-bottom: 8px; }
-    .exec-metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 20px; }
-    .exec-card { background: #070a12; border: 1px solid #1e293b; border-radius: 12px; padding: 20px; text-align: center; }
-    .exec-val { font-size: 1.8rem; font-weight: 800; color: #10b981; margin-top: 6px; font-family: 'JetBrains Mono', monospace; }
+    .diag-card { background: #070a12; border: 1px solid #1e293b; border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+    .diag-title { font-weight: 700; font-size: 1rem; color: #60a5fa; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+
+    /* SVG Architecture Diagram Styles */
+    .svg-diag { width: 100%; height: auto; background: #0b0f19; border-radius: 10px; padding: 16px; border: 1px solid #1e293b; }
 
     /* Results */
     .res-block { background: #070a12; border: 1px solid #1e293b; border-radius: 10px; padding: 16px; margin-bottom: 14px; }
@@ -349,23 +353,25 @@ def index_html():
   <div class="container">
     <header>
       <div class="logo-group">
-        <h1>⚡ Laya Enterprise Studio</h1>
-        <p style="color: var(--text-muted); font-size: 0.88rem; margin-top: 4px;">
-          System 1 Non-Autoregressive Decision Engine (Sub-35ms Single Neural Pass)
-        </p>
+        <h1>⚡ Laya Engineering & Science Studio</h1>
+        <div class="attribution-tag">
+          <span>Created by <a href="https://github.com/NandhaKishorM/laya" target="_blank"><b>NandhaKishorM / Convai Innovations</b></a></span>
+          <span>•</span>
+          <span>License: <b>Apache-2.0</b></span>
+        </div>
       </div>
 
       <!-- Mode Switcher -->
       <div class="mode-switch-container">
         <button class="mode-btn active" id="btn-dev-mode" onclick="setMode('dev')">🛠️ Visual Studio & Sandbox</button>
-        <button class="mode-btn" id="btn-exec-mode" onclick="setMode('exec')">📊 C-Suite Executive Briefing</button>
+        <button class="mode-btn" id="btn-exec-mode" onclick="setMode('exec')">🔬 Executive & Engineering Science</button>
       </div>
     </header>
 
     <!-- Telemetry Bar -->
     <div class="telemetry-row">
       <div class="stat-card">
-        <div class="stat-label">Single-Pass Latency</div>
+        <div class="stat-label">Forward Pass Latency</div>
         <div class="stat-value" id="stat-latency">-- ms</div>
       </div>
       <div class="stat-card">
@@ -373,7 +379,7 @@ def index_html():
         <div class="stat-value" id="stat-routed">--</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">Hardware Device</div>
+        <div class="stat-label">Hardware Architecture</div>
         <div class="stat-value" id="stat-device">--</div>
       </div>
       <div class="stat-card">
@@ -382,35 +388,74 @@ def index_html():
       </div>
     </div>
 
-    <!-- C-SUITE EXECUTIVE BRIEFING PANEL -->
-    <div class="csuite-panel">
-      <div class="exec-hero">
-        <h2>📊 Executive Briefing: System 1 Decision Efficiency</h2>
-        <p style="color: var(--text-muted); max-width: 800px; margin: 0 auto;">
-          Laya replaces expensive, hallucination-prone LLM token generation with <strong>instantaneous single-pass neural classification</strong>. Zero prompt engineering failures, 100% typed output compliance.
+    <!-- EXECUTIVE & ENGINEERING SCIENCE PANEL -->
+    <div class="exec-panel">
+      <div class="card" style="margin-bottom: 24px;">
+        <div class="card-title">🔬 Neural Topology & System 1 Execution Paradigm</div>
+        <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 20px;">
+          Laya is a non-autoregressive decision engine trained via <strong>Reinforcement Learning against Strictly Proper Scoring Rules (RLCD)</strong>. It projects text/JSON state into calibrated probability spaces in a single forward pass without autoregressive token sampling.
         </p>
 
-        <div class="exec-metrics-grid">
-          <div class="exec-card">
-            <div class="stat-label">Inference Speedup</div>
-            <div class="exec-val" id="exec-speedup">50x Faster</div>
-            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">33ms vs 1.8s LLM average</div>
+        <!-- DIAGRAM 1: SINGLE FORWARD PASS NEURAL ARCHITECTURE -->
+        <div class="diag-card">
+          <div class="diag-title">📐 Diagram 1: Single Forward Pass Neural Topology vs Autoregressive LLM</div>
+          <svg class="svg-diag" viewBox="0 0 900 240">
+            <!-- System 2 Autoregressive LLM -->
+            <rect x="20" y="20" width="410" height="200" rx="10" fill="#111827" stroke="#374151" stroke-dasharray="4"/>
+            <text x="35" y="45" fill="#f43f5e" font-weight="bold" font-size="14">System 2: Autoregressive LLM (GPT-4 / Llama 3)</text>
+            <text x="35" y="70" fill="#9ca3af" font-size="12">Input State ➔ Token 1 ➔ Token 2 ➔ ... ➔ Token N (500–2000 ms)</text>
+            <rect x="35" y="90" width="380" height="40" rx="6" fill="#1f293d" stroke="#f43f5e"/>
+            <text x="50" y="115" fill="#f8fafc" font-size="12">Iterative KV-Cache Expansion + Softmax Loop</text>
+            <text x="35" y="160" fill="#f43f5e" font-size="12">⚠️ High VRAM Inflation + Free-Form Schema Hallucinations</text>
+            
+            <!-- System 1 Laya Single Pass -->
+            <rect x="470" y="20" width="410" height="200" rx="10" fill="#0f172a" stroke="#10b981" stroke-width="2"/>
+            <text x="485" y="45" fill="#10b981" font-weight="bold" font-size="14">System 1: Laya Engine (ModernBERT / mmBERT)</text>
+            <text x="485" y="70" fill="#9ca3af" font-size="12">Input State + Typed Questions ➔ Single Forward Pass (8–33 ms)</text>
+            <rect x="485" y="90" width="380" height="40" rx="6" fill="#064e3b" stroke="#10b981"/>
+            <text x="500" y="115" fill="#f8fafc" font-size="12">Parallel Multi-Head Categorical Projection</text>
+            <text x="485" y="160" fill="#10b981" font-size="12">✅ 100% Typed Schema Compliance + Zero Token Generation</text>
+          </svg>
+        </div>
+
+        <!-- DIAGRAM 2: DYNAMIC SCRIPT & ROUTER PIPELINE -->
+        <div class="diag-card">
+          <div class="diag-title">⚡ Diagram 2: Sub-Millisecond Script Analysis & Checkpoint Router</div>
+          <svg class="svg-diag" viewBox="0 0 900 160">
+            <rect x="20" y="30" width="160" height="100" rx="8" fill="#1e293b" stroke="#3b82f6"/>
+            <text x="35" y="65" fill="#60a5fa" font-weight="bold" font-size="13">Raw State Input</text>
+            <text x="35" y="90" fill="#9ca3af" font-size="11">Text, Email, JSON</text>
+
+            <path d="M 180 80 L 250 80" stroke="#3b82f6" stroke-width="2" marker-end="url(#arrow)"/>
+
+            <rect x="250" y="30" width="180" height="100" rx="8" fill="#1e293b" stroke="#06b6d4"/>
+            <text x="265" y="60" fill="#06b6d4" font-weight="bold" font-size="13">Script & Lang Router</text>
+            <text x="265" y="80" fill="#9ca3af" font-size="11">Unicode Topo (<0.5ms)</text>
+            <text x="265" y="100" fill="#9ca3af" font-size="11">Devanagari, Kanji, Latin</text>
+
+            <path d="M 430 50 L 530 35" stroke="#10b981" stroke-width="2"/>
+            <path d="M 430 110 L 530 125" stroke="#8b5cf6" stroke-width="2"/>
+
+            <rect x="530" y="15" width="340" height="50" rx="6" fill="#064e3b" stroke="#10b981"/>
+            <text x="545" y="45" fill="#f8fafc" font-size="12">laya (ModernBERT-large 421M, English, 512 ctx)</text>
+
+            <rect x="530" y="95" width="340" height="50" rx="6" fill="#3b0764" stroke="#8b5cf6"/>
+            <text x="545" y="125" fill="#f8fafc" font-size="12">laya-multilingual (mmBERT-base 322M, 100+ langs)</text>
+          </svg>
+        </div>
+
+        <!-- RLCD MATHEMATICAL PRINCIPLES -->
+        <div class="diag-card">
+          <div class="diag-title">🧮 RLCD Training & Proper Scoring Rule Calibration</div>
+          <p style="color: #cbd5e1; font-size: 0.9rem; line-height: 1.6;">
+            Laya probability distributions are calibrated using <strong>Strictly Proper Scoring Rules</strong> (Brier Score Rewards):
+          </p>
+          <div style="background: #0b0f19; border-left: 4px solid #10b981; padding: 14px; margin-top: 10px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: #a78bfa;">
+            Brier Loss = (1 / N) * Σ sum_{k=1}^K (P(y_k) - Y_k)^2
           </div>
-          <div class="exec-card">
-            <div class="stat-label">Annual Token Cost Savings</div>
-            <div class="exec-val" id="exec-savings">$30,000 / yr</div>
-            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">Per 1M queries (Zero API cost)</div>
-          </div>
-          <div class="exec-card">
-            <div class="stat-label">Hallucination Risk</div>
-            <div class="exec-val" style="color: #10b981;">0.0%</div>
-            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">Natively Typed Probability Space</div>
-          </div>
-          <div class="exec-card">
-            <div class="stat-label">SOC2 & Data Privacy</div>
-            <div class="exec-val" style="color: #60a5fa;">PASSED</div>
-            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">Zero third-party token transmission</div>
-          </div>
+          <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 10px;">
+            This mathematical loss formulation forces model output confidences to equal true empirical probability values, eliminating the calibration distortion inherent in standard cross-entropy models.
+          </p>
         </div>
       </div>
     </div>
@@ -441,7 +486,7 @@ def index_html():
         <button class="btn" onclick="runPrediction()">⚡ Execute Single-Pass Decision</button>
       </div>
 
-      <!-- VISUAL QUESTION BUILDER CARD (NO JSON NEEDED FOR END-USERS) -->
+      <!-- VISUAL QUESTION BUILDER CARD -->
       <div class="card">
         <div class="card-title">
           <span>⚙️ Visual Question Schema Builder</span>
@@ -490,11 +535,11 @@ def index_html():
       const btnExec = document.getElementById('btn-exec-mode');
 
       if (mode === 'exec') {
-        root.classList.add('csuite-active');
+        root.classList.add('exec-active');
         btnExec.classList.add('active');
         btnDev.classList.remove('active');
       } else {
-        root.classList.remove('csuite-active');
+        root.classList.remove('exec-active');
         btnDev.classList.add('active');
         btnExec.classList.remove('active');
       }
@@ -572,7 +617,6 @@ def index_html():
         container.appendChild(item);
       });
 
-      // Update sync JSON view
       document.getElementById('questions-json').value = JSON.stringify(getQuestionsFromBuilder(), null, 2);
     }
 
@@ -658,9 +702,6 @@ def index_html():
       document.getElementById('stat-latency').textContent = data.latency_ms + ' ms';
       document.getElementById('stat-routed').textContent = data.routing.model.toUpperCase();
       document.getElementById('stat-vram').textContent = data.telemetry.gpu.allocated_mb + ' MB';
-
-      document.getElementById('exec-speedup').textContent = data.executive_summary.speedup_vs_llm;
-      document.getElementById('exec-savings').textContent = data.executive_summary.annual_cost_savings;
 
       document.getElementById('routing-rationale').innerHTML = 
         `<strong>Routing Reason:</strong> ${data.routing.reason} <br><strong>Checkpoint Repo:</strong> <code>${data.routing.repo}</code>`;

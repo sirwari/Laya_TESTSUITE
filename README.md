@@ -5,26 +5,36 @@
   </picture>
 </p>
 
-<h1 align="center">⚡ Laya TestSuite & Enterprise Decision Studio</h1>
+<h1 align="center">⚡ Laya TestSuite & Engineering Science Studio</h1>
 
 <p align="center">
-  <b>Comprehensive Test Suite, Live Interactive Dashboard, C-Suite Executive Briefing Studio, Support Ticket Routing Agent, Apple Silicon MLX Setup, & Retraining Guide for Laya.</b>
+  <b>Comprehensive Test Suite, Live Visual Studio, Engineering & Science Executive Mode, Support Ticket Routing Agent, Apple Silicon MLX Setup, & Retraining Guide for Laya.</b>
 </p>
 
 <div align="center">
 
+[![Original Creator](https://img.shields.io/badge/Original%20Creator-NandhaKishorM%20%2F%20Convai--Innovations-blue.svg)](https://github.com/NandhaKishorM/laya)
+[![License](https://img.shields.io/badge/License-Apache%202.0-green.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Python Version](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
 [![NVIDIA RTX 3090](https://img.shields.io/badge/GPU-NVIDIA%20RTX%203090-green.svg)](https://www.nvidia.com/)
 [![Apple Silicon MLX](https://img.shields.io/badge/Apple%20Silicon-MLX%20%2B%20MPS-orange.svg)](https://github.com/ml-explore/mlx)
-[![License](https://img.shields.io/badge/License-Apache%202.0-green.svg)](https://opensource.org/licenses/Apache-2.0)
 
 </div>
 
 ---
 
-## 📖 Executive Summary & Overview
+## 🙏 Attribution & License Notice
 
-**Laya** is a high-speed, non-autoregressive System 1 decision engine. It evaluates typed questions (`choice`, `score`, `noul`) over any state (customer support tickets, emails, unstructured text, JSON documents) in **a single forward pass (~8–33 ms)** across **over 100 languages**.
+- **Original Creator**: **NandhaKishorM** / **Convai Innovations**
+- **Original Repository**: [https://github.com/NandhaKishorM/laya](https://github.com/NandhaKishorM/laya)
+- **HuggingFace Checkpoints**: [`convaiinnovations/laya`](https://huggingface.co/convaiinnovations/laya), [`convaiinnovations/laya-multilingual`](https://huggingface.co/convaiinnovations/laya-multilingual), [`convaiinnovations/laya-typed-decisions`](https://huggingface.co/convaiinnovations/laya-typed-decisions)
+- **License**: **Apache License 2.0**
+
+---
+
+## 📖 Executive & Scientific Overview
+
+**Laya** is a high-speed, non-autoregressive System 1 decision engine. It evaluates typed questions (`choice`, `score`, `noul`) over any state (customer support tickets, emails, unstructured text, JSON documents) in **a single neural forward pass (~8–33 ms)** across **over 100 languages**.
 
 Unlike traditional Generative LLMs (Llama 3, GPT-4) that generate free-form text token-by-token over 1,500+ ms:
 - **Laya generates zero text tokens.**
@@ -38,7 +48,7 @@ Unlike traditional Generative LLMs (Llama 3, GPT-4) that generate free-form text
 
 ```
 Laya_TESTSUITE/
-├── dashboard_app.py                  # Live Web Dashboard (Visual Builder & C-Suite Executive Mode)
+├── dashboard_app.py                  # Live Web Dashboard (Visual Builder & Scientific Executive Mode)
 ├── tests/
 │   └── test_rtx3090_laya_suite.py   # PyTorch CUDA RTX 3090 Automated Test Suite (5/5 Passing)
 ├── examples/
@@ -84,7 +94,11 @@ Open your browser at: 👉 **[http://localhost:8000](http://localhost:8000)**
 
 ### Key Features:
 - **🛠️ Visual Schema Builder (For End-Users)**: Form-based question creation. Add questions (`Categorical Choice`, `Intensity Score`, `Yes/No Flag`), specify instructions, and type criteria descriptions without writing raw JSON.
-- **📊 C-Suite Executive Briefing Mode**: High-level presentation mode with 50x LLM speedup gauges, annual ROI/cost-savings calculator ($30,000+ / yr saved per 1M queries), 0% hallucination guarantee, and SOC2 compliance indicators.
+- **🔬 Executive & Engineering Science Mode**: Scientific briefing mode featuring:
+  - **Neural Topology SVG Diagrams**: Single-pass forward classification vs autoregressive LLM KV-cache expansion.
+  - **Script & Language Router Pipeline Diagram**: <0.5ms Unicode topology filtering.
+  - **RLCD Proper Scoring Rules Math**: Brier loss calibration formulation ($BS = \frac{1}{N}\sum (P_k - Y_k)^2$).
+  - **Deterministic SLA Metrics**: Single forward pass execution (~9 ms CUDA / ~25 ms Metal MPS).
 - **Interactive Scenarios**:
   - P1 Production Outage Escalation
   - Account Security & Fraud Guardrail
@@ -173,5 +187,5 @@ pytest tests/test_rtx3090_laya_suite.py -v -s
 
 ---
 
-## 📄 License
-Apache-2.0 License. Built for enterprise decision engines, support routing agents, and non-autoregressive System 1 AI pipelines.
+## 📄 Attribution & License
+Original Laya models and architecture created by **NandhaKishorM / Convai Innovations** under the **Apache-2.0 License**.
