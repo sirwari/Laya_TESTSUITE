@@ -115,26 +115,173 @@ PRESETS = {
             }
         }
     },
-    "Compliance & SOC2 Data Breach Alert": {
-        "text": "ALERT: Confidential customer PII was inadvertently logged in standard application debug traces during tonight's deployment batch.",
+    "Max Capability: SOC2 Zero-Day Exploit & Ransomware Threat": {
+        "text": "INCIDENT REPORT #INC-2026-8812: At 02:14 UTC SIEM triggered alerts on SQL injection targeting customer DB. Attackers exploited zero-day vulnerability in API gateway to bypass OAuth 2FA. 45k customer records with PII were exfiltrated to IP 185.220.101.5. Payload attempted to lock DB tables demanding 50 BTC ransom within 24h. DB subnet isolated, CISO escalation & GDPR 72h notification decision needed.",
         "questions": {
-            "category": {
+            "incident_severity": {
                 "type": "choice",
-                "instructions": "Classify compliance event category",
+                "instructions": "Classify security incident severity level",
                 "criteria": {
-                    "data_privacy": "PII leak, GDPR, privacy breach",
-                    "system_bug": "software defect",
-                    "billing": "finance"
+                    "p1_critical_breach": "P1 Critical: Exfiltration, ransomware, full compromise",
+                    "p2_major_compromise": "P2 Major: Vulnerability exploited, no exfiltration",
+                    "p3_moderate_outage": "P3 Moderate: System degradation",
+                    "p4_minor_event": "P4 Minor: Failed attack attempt"
                 }
             },
-            "compliance_severity": {
-                "type": "score",
-                "instructions": "Assess SOC2 compliance severity level",
-                "criteria": ["Informational", "Minor Non-conformity", "Critical Security Breach"]
+            "attack_vector": {
+                "type": "choice",
+                "instructions": "Identify primary attack vector",
+                "criteria": {
+                    "sql_injection_exfiltration": "SQL injection exfiltration",
+                    "ransomware_encryption": "Ransomware locker",
+                    "oauth_auth_bypass": "Authentication 2FA bypass",
+                    "ddos_outage": "DDoS outage"
+                }
             },
-            "notify_ciso": {
+            "data_exfiltration": {
                 "type": "noul",
-                "instructions": "Does this incident require immediate CISO & Legal notification?"
+                "instructions": "Was sensitive customer PII exfiltrated?"
+            },
+            "ransomware_threat": {
+                "type": "noul",
+                "instructions": "Does the incident involve an active ransomware extortion demand?"
+            },
+            "compliance_impact": {
+                "type": "score",
+                "instructions": "Rate compliance and regulatory impact",
+                "criteria": ["Level 0: Internal", "Level 1: Minor SOC2 note", "Level 2: GDPR 72h notice", "Level 3: SEC Material Fines"]
+            },
+            "executive_action": {
+                "type": "choice",
+                "instructions": "Specify mandatory executive action",
+                "criteria": {
+                    "ciso_emergency_dispatch": "CISO SMS & Legal Counsel dispatch",
+                    "soc_team_review": "SOC team review within 4h",
+                    "routine_helpdesk": "Routine ticket"
+                }
+            }
+        }
+    },
+    "Max Capability: AML Wire Fraud & Structuring Detection": {
+        "text": "SWIFT AUDIT #SWIFT-99120-FRD: Account #ACC-4491-001 opened 3 days ago by shell corp 'Apex Global Trading LLC' initiated $850,000 USD wire to Nicosia, Cyprus. Balance grew from $100 via 45 rapid $19,500 deposits (structuring threshold evasion). VPN node in Seychelles vs Delaware registration. Beneficiary matches partial OFAC watchlist.",
+        "questions": {
+            "fraud_typology": {
+                "type": "choice",
+                "instructions": "Classify financial crime typology",
+                "criteria": {
+                    "structuring_smurfing": "Structuring deposits below CTR limit",
+                    "wire_fraud": "Wire fraud / forged invoice",
+                    "account_takeover": "Stolen credentials",
+                    "normal_corporate": "Legitimate enterprise wire"
+                }
+            },
+            "aml_risk_level": {
+                "type": "score",
+                "instructions": "Rate overall AML risk score",
+                "criteria": ["Clean", "Low Risk", "Moderate SAR Required", "Critical OFAC Sanction Match"]
+            },
+            "ofac_sanction_match": {
+                "type": "noul",
+                "instructions": "Does beneficiary match OFAC sanction watchlist?"
+            },
+            "structuring_detected": {
+                "type": "noul",
+                "instructions": "Were rapid micro-deposits used to evade reporting limits?"
+            },
+            "account_intervention": {
+                "type": "choice",
+                "instructions": "Select mandatory risk intervention",
+                "criteria": {
+                    "freeze_account_and_funds": "Freeze account and hold $850k wire",
+                    "require_in_person_id": "Require corporate ID verification",
+                    "allow_with_flag": "Allow wire but file report"
+                }
+            },
+            "sar_filing_required": {
+                "type": "noul",
+                "instructions": "Is mandatory SAR filing required with FinCEN?"
+            }
+        }
+    },
+    "Max Capability: Supply Chain Logistics & Port Seizure Claim": {
+        "text": "FREIGHT CLAIM #LOG-2026-5511: Order #PO-88410 of 5,000 CNC lathe units ($320,000 USD) shipped via ocean freight container #TGHU-9921 from Shenzhen to Hamburg. Customs placed seizure hold due to missing origin docs. Container exposed to rainstorms for 14 days. 1,200 units severely corroded. Customer Nordic Precision GmbH refused delivery, threatened legal arbitration, demands $320k refund + $50k delay damages.",
+        "questions": {
+            "claim_category": {
+                "type": "choice",
+                "instructions": "Classify logistics claim category",
+                "criteria": {
+                    "damaged_freight": "Corrosion and transit physical damage",
+                    "customs_seizure": "Customs clearance hold",
+                    "delay_damages": "Late delivery penalty"
+                }
+            },
+            "liable_party": {
+                "type": "choice",
+                "instructions": "Determine primary liable party",
+                "criteria": {
+                    "freight_forwarder": "Freight forwarder (incorrect paperwork)",
+                    "ocean_carrier": "Ocean shipping line (improper storage)",
+                    "port_customs": "Hamburg port customs authority"
+                }
+            },
+            "claim_financial_tier": {
+                "type": "score",
+                "instructions": "Assess financial claim tier",
+                "criteria": ["Tier 1: < $5k", "Tier 2: $5k-$50k", "Tier 3: $50k-$200k", "Tier 4: > $200k Enterprise"]
+            },
+            "legal_threat": {
+                "type": "noul",
+                "instructions": "Does customer threaten legal arbitration?"
+            },
+            "resolution_action": {
+                "type": "choice",
+                "instructions": "Select resolution strategy",
+                "criteria": {
+                    "expedited_replacement": "Ship air freight replacement & credit",
+                    "full_cash_refund": "Issue full $320k cash refund",
+                    "legal_counsel_review": "Escalate to corporate legal counsel"
+                }
+            }
+        }
+    },
+    "Max Capability: Clinical EHR Triage & Code STEMI Escalation": {
+        "text": "EMERGENCY TRIAGE #EHR-2026-0091: 62yo male presenting with acute substernal chest pressure radiating to left jaw/shoulder, severe diaphoresis and dyspnea for 45 min. Vitals: BP 178/104, HR 112, O2 Sat 88% room air. 12-lead ECG reveals 3mm ST-elevation in V1-V4. POC Troponin I critical at 4.82 ng/mL (Normal <0.04). History of hypertension, T2D, 30 pack-year smoking.",
+        "questions": {
+            "triage_acuity_level": {
+                "type": "score",
+                "instructions": "Assign Emergency Severity Index (ESI) score",
+                "criteria": ["ESI 5: Non-urgent", "ESI 4: Less urgent", "ESI 3: Urgent", "ESI 2: Emergent", "ESI 1: Resuscitation"]
+            },
+            "primary_diagnosis": {
+                "type": "choice",
+                "instructions": "Determine primary clinical diagnostic category",
+                "criteria": {
+                    "stemi_myocardial_infarction": "STEMI Acute Myocardial Infarction",
+                    "pulmonary_embolism": "Acute Pulmonary Embolism",
+                    "aortic_dissection": "Aortic Dissection",
+                    "gastroesophageal": "GERD / Esophageal spasm"
+                }
+            },
+            "cath_lab_activation": {
+                "type": "noul",
+                "instructions": "Is immediate Code STEMI Cath Lab activation required?"
+            },
+            "icu_bed_required": {
+                "type": "noul",
+                "instructions": "Is admission to Cardiac Intensive Care Unit (CICU) required?"
+            },
+            "troponin_critical_alert": {
+                "type": "noul",
+                "instructions": "Is cardiac troponin at critical panic value?"
+            },
+            "specialist_consult": {
+                "type": "choice",
+                "instructions": "Select specialist consultation",
+                "criteria": {
+                    "interventional_cardiology": "Interventional Cardiology",
+                    "pulmonology": "Pulmonology",
+                    "general_internal_medicine": "General Internal Medicine"
+                }
             }
         }
     },
