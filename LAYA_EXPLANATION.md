@@ -63,8 +63,30 @@ print("Apple MLX Array:", mlx_probs)
 
 ## 4. Hardware Telemetry & Performance Benchmark
 
-| Hardware Target | Backend | Preloaded VRAM / RAM | Single Query Latency |
-|---|---|---|---|
 | **NVIDIA RTX 3090** | PyTorch CUDA 13.2 | ~4.4 GB Reserved | **~9.2 ms** |
 | **Apple Silicon MacBook (M1-M4)** | PyTorch MPS + MLX | ~1.2 GB Unified RAM | **~25.0 ms** |
 | **CPU (Intel / AMD / ARM)** | PyTorch CPU | ~1.2 GB System RAM | **~190.0 ms** |
+
+---
+
+## 5. Input Token Length & Context Scaling (Up to 8,192 Tokens)
+
+### Default Token Budgets
+- `laya` (ModernBERT-large): `max_len = 512` tokens (`head_max_len = 192` options budget).
+- `laya-multilingual` (mmBERT-base): `max_len = 1024` tokens (`head_max_len = 256` options budget).
+
+### Scaling to 8,192 Tokens at Runtime
+ModernBERT & mmBERT support an architectural limit of **8,192 tokens**. You can dynamically scale context windows at runtime without retraining:
+
+```python
+import laya
+
+agent = laya.load("convaiinnovations/laya-multilingual")
+
+# Expand total context to 8,192 tokens (7,168 tokens for document state ~ 5,500 words)
+agent.cfg["max_len"] = 8192
+agent.cfg["head_max_len"] = 1024
+
+# Single pass prediction over long document
+result = agent.predict(long_document_state, questions)
+```

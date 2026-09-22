@@ -173,12 +173,42 @@ pytest tests/test_rtx3090_laya_suite.py -v -s
 
 ---
 
+## 📏 6. Max Input Token Length & Context Window Scaling (Up to 8,192 Tokens)
+
+### Default Token Limits
+- `laya` (ModernBERT-large): `max_len = 512` tokens (`head_max_len = 192` options budget).
+- `laya-multilingual` (mmBERT-base): `max_len = 1024` tokens (`head_max_len = 256` options budget).
+
+### Dynamically Scaling Context to 8,192 Tokens
+ModernBERT & mmBERT encoder backbones support up to **8,192 tokens**. You can dynamically scale the context window at runtime without retraining:
+
+```python
+import laya
+
+agent = laya.load("convaiinnovations/laya-multilingual")
+
+# Scale total context to 8,192 tokens (7,168 tokens for state document ~ 5,500 words)
+agent.cfg["max_len"] = 8192
+agent.cfg["head_max_len"] = 1024
+
+# Predict over long document state
+result = agent.predict(long_document_state, questions)
+```
+
+Run the context scaling demonstration script:
+```bash
+python examples/context_scaling_demo.py
+```
+
+---
+
 ## 🚀 Quick Commands Cheat Sheet
 
 | Task | Command |
 |---|---|
 | **Launch Web Dashboard** | `python dashboard_app.py` $\rightarrow$ Open `http://localhost:8000` |
 | **Run Support Ticket Agent** | `python examples/support_ticket_routing_agent.py` |
+| **Run Context Scaling Demo** | `python examples/context_scaling_demo.py` |
 | **Run Custom Fine-Tuning** | `python examples/train_custom_laya.py` |
 | **Run PyTorch GPU Test Suite** | `pytest tests/test_rtx3090_laya_suite.py -v -s` |
 | **Run Interactive CLI Prompt** | `python test_cli_input.py` |
